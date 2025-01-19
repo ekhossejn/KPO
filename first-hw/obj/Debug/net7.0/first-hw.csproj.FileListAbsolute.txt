@@ -1,0 +1,15 @@
+/Users/katusha/KPO/first-hw/obj/Debug/net7.0/first-hw.csproj.AssemblyReference.cache
+/Users/katusha/KPO/first-hw/obj/Debug/net7.0/first-hw.GeneratedMSBuildEditorConfig.editorconfig
+/Users/katusha/KPO/first-hw/obj/Debug/net7.0/first-hw.AssemblyInfoInputs.cache
+/Users/katusha/KPO/first-hw/obj/Debug/net7.0/first-hw.AssemblyInfo.cs
+/Users/katusha/KPO/first-hw/obj/Debug/net7.0/first-hw.csproj.CoreCompileInputs.cache
+/Users/katusha/KPO/first-hw/bin/Debug/net7.0/first-hw
+/Users/katusha/KPO/first-hw/bin/Debug/net7.0/first-hw.deps.json
+/Users/katusha/KPO/first-hw/bin/Debug/net7.0/first-hw.runtimeconfig.json
+/Users/katusha/KPO/first-hw/bin/Debug/net7.0/first-hw.dll
+/Users/katusha/KPO/first-hw/bin/Debug/net7.0/first-hw.pdb
+/Users/katusha/KPO/first-hw/obj/Debug/net7.0/first-hw.dll
+/Users/katusha/KPO/first-hw/obj/Debug/net7.0/refint/first-hw.dll
+/Users/katusha/KPO/first-hw/obj/Debug/net7.0/first-hw.pdb
+/Users/katusha/KPO/first-hw/obj/Debug/net7.0/first-hw.genruntimeconfig.cache
+/Users/katusha/KPO/first-hw/obj/Debug/net7.0/ref/first-hw.dll
