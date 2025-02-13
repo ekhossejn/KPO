@@ -19,26 +19,26 @@ namespace MiniHW1
 
         static void Main()
         {
-            var serviceProvider = new ServiceCollection()
+            var manager = new ServiceCollection()
                 .AddTransient<IHealthChecker, VeterinaryClinic>()
                 .AddTransient<Zoo>()
                 .BuildServiceProvider();
-            var zoo = serviceProvider.GetRequiredService<Zoo>();
+            var zoo = manager.GetRequiredService<Zoo>();
 
             Console.WriteLine("Добавление Herbo");
             // Herbo                [food, health (>5), number, kind (>5)].
-            zoo.AddAnimal(new Monkey(1, 7, NextNumber, 10)); // 1 - Healthy and kind.
-            zoo.AddAnimal(new Rabbit(1, 6, NextNumber, 2)); // 2 - Healthy and Not kind.
-            zoo.AddAnimal(new Monkey(1, 5, NextNumber, 7)); // 3 - Not healthy and kind.
-            zoo.AddAnimal(new Rabbit(1, 5, NextNumber, 5)); // 4 - Not healthy and Not kind.
+            zoo.AddAnimal(new Monkey(1, 7, NextNumber, 10)); // 1 - health(+) kind(+).
+            zoo.AddAnimal(new Rabbit(1, 6, NextNumber, 2)); // 2 - health(+) kind(-).
+            zoo.AddAnimal(new Monkey(1, 5, NextNumber, 7)); // 3 - health(-) kind(+).
+            zoo.AddAnimal(new Rabbit(1, 5, NextNumber, 5)); // 4 - health(-) kind(-).
             Console.WriteLine();
 
             Console.WriteLine("Добавление Predator");
             // Predator            [food, health (>5), number].
-            zoo.AddAnimal(new Tiger(1, 7, NextNumber)); // 5 - Healthy.
-            zoo.AddAnimal(new Wolf(1, 6, NextNumber)); // 6 - Healthy.
-            zoo.AddAnimal(new Tiger(1, 5, NextNumber)); // 7 - Not healthy.
-            zoo.AddAnimal(new Wolf(1, 5, NextNumber)); // 8 - Not healthy.
+            zoo.AddAnimal(new Tiger(1, 7, NextNumber)); // 5 - health(+).
+            zoo.AddAnimal(new Wolf(1, 6, NextNumber)); // 6 - health(+).
+            zoo.AddAnimal(new Tiger(1, 5, NextNumber)); // 7 - health(-).
+            zoo.AddAnimal(new Wolf(1, 5, NextNumber)); // 8 - health(-).
             Console.WriteLine();
 
             Console.WriteLine("Добавление Thing");

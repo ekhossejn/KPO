@@ -5,4 +5,3 @@
 		public Computer(int number) : base(number) { }
 	}
 }
-

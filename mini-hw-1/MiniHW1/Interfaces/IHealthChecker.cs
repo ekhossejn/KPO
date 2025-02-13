@@ -5,4 +5,3 @@
         public bool IsHealthy(IAlive alive);
     }
 }
-

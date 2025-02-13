@@ -5,4 +5,3 @@
 		public Table(int number) : base(number) { }
 	}
 }
-

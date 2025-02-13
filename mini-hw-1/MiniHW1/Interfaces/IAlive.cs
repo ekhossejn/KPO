@@ -6,4 +6,3 @@
 		int Health { get; set; }
 	}
 }
-
