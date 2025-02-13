@@ -46,8 +46,7 @@ namespace MiniHW1.Services
 
         public List<Herbo> GetInteractiveZooAnimals()
         {
-            return _animals.OfType<Herbo>().Where(a => a.IsAbleToBeInInteractiveZoo()).ToList();
+            return _animals.OfType<Herbo>().Where(animal => animal.IsAbleToBeInInteractiveZoo()).ToList();
         }
     }
 }
-
