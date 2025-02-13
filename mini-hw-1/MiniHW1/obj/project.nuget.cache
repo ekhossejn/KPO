@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "zv29+wcFW1K7Ys0kv/LxyPE32FvV38ltKD2nXyVXx1V3BBJ3Too8wtoXirBmkG2fnPBOeyswJl5qjxHBsCg+9w==",
+  "success": true,
+  "projectFilePath": "/Users/katusha/KPO/mini-hw-1/MiniHW1/MiniHW1.csproj",
+  "expectedPackageFiles": [
+    "/Users/katusha/.nuget/packages/microsoft.extensions.dependencyinjection/9.0.2/microsoft.extensions.dependencyinjection.9.0.2.nupkg.sha512",
+    "/Users/katusha/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/9.0.2/microsoft.extensions.dependencyinjection.abstractions.9.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}
