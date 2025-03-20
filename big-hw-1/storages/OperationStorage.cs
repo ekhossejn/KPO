@@ -3,7 +3,7 @@ using big_hw_1.models;
 
 namespace big_hw_1.storages
 {
-	public class OperationStorage
+	public class OperationStorage : IStorage<Operation>
 	{
         private readonly Dictionary<Guid, Operation> _operationStorage = new();
 

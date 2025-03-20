@@ -3,7 +3,7 @@ using big_hw_1.models;
 
 namespace big_hw_1.storages
 {
-	public class CategoryStorage
+	public class CategoryStorage : IStorage<Category>
 	{
         private readonly Dictionary<Guid, Category> _categoryStorage = new();
 

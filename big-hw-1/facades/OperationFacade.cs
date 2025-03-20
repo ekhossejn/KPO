@@ -8,11 +8,11 @@ namespace big_hw_1.facades
 {
 	public class OperationFacade
 	{
-        private readonly OperationStorage _operationStorage;
-        private readonly BankAccountStorage _bankAccountStorage;
-        private readonly CategoryStorage _categoryStorage;
+        private readonly IStorage<Operation> _operationStorage;
+        private readonly IStorage<BankAccount> _bankAccountStorage;
+        private readonly IStorage<Category> _categoryStorage;
 
-        public OperationFacade(OperationStorage operationStorage, BankAccountStorage bankAccountStorage, CategoryStorage categoryStorage)
+        public OperationFacade(IStorage<Operation> operationStorage, IStorage<BankAccount> bankAccountStorage, IStorage<Category> categoryStorage)
         {
             _operationStorage = operationStorage;
             _bankAccountStorage = bankAccountStorage;

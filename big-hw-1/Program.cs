@@ -2,6 +2,8 @@
 using big_hw_1.facades;
 using big_hw_1.menu;
 using big_hw_1.storages;
+using big_hw_1.models;
+
 namespace big_hw_1
 {
     class Program
@@ -12,9 +14,12 @@ namespace big_hw_1
                 .AddSingleton<BankAccountStorage>()
                 .AddSingleton<CategoryStorage>()
                 .AddSingleton<OperationStorage>()
-
-                // proxy
-
+                .AddSingleton<IStorage<BankAccount>>(provider =>
+                    new StorageProxy<BankAccount>(provider.GetRequiredService<BankAccountStorage>()))
+                .AddSingleton<IStorage<Category>>(provider =>
+                    new StorageProxy<Category>(provider.GetRequiredService<CategoryStorage>()))
+                .AddSingleton<IStorage<Operation>>(provider =>
+                    new StorageProxy<Operation>(provider.GetRequiredService<OperationStorage>()))
                 .AddSingleton<BankAccountFacade>()
                 .AddSingleton<CategoryFacade>()
                 .AddSingleton<OperationFacade>()

@@ -6,9 +6,9 @@ namespace big_hw_1.facades
 {
 	public class CategoryFacade
 	{
-        private readonly CategoryStorage _categoryStorage;
+        private readonly IStorage<Category> _categoryStorage;
 
-        public CategoryFacade(CategoryStorage categoryStorage)
+        public CategoryFacade(IStorage<Category> categoryStorage)
         {
             _categoryStorage = categoryStorage;
         }

@@ -1,7 +1,7 @@
 ﻿using System;
 namespace big_hw_1.models
 {
-	public class Category
+	public class Category : IModel
 	{
 		public Guid Id { get; private set; }
 		public string Name { get; private set; }

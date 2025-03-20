@@ -1,7 +1,7 @@
 ﻿using System;
 namespace big_hw_1.models
 {
-	public class Operation
+	public class Operation : IModel
 	{
 		public Guid Id { get; private set; }
 		public Type Type { get; private set; }

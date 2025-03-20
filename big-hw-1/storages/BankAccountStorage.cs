@@ -2,7 +2,7 @@
 using big_hw_1.models;
 namespace big_hw_1.storages
 {
-	public class BankAccountStorage
+	public class BankAccountStorage : IStorage<BankAccount>
 	{
 		private readonly Dictionary<Guid, BankAccount> _bankAccountStorage = new();
 

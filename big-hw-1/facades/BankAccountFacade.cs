@@ -6,9 +6,9 @@ namespace big_hw_1.facades
 {
 	public class BankAccountFacade
 	{
-		private readonly BankAccountStorage _bankAccountStorage;
+		private readonly IStorage<BankAccount> _bankAccountStorage;
 
-        public BankAccountFacade(BankAccountStorage bankAccountStorage)
+        public BankAccountFacade(IStorage<BankAccount> bankAccountStorage)
 		{
 			_bankAccountStorage = bankAccountStorage;
         }
