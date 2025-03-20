@@ -1,0 +1,42 @@
+{
+  "BankAccounts": [
+    {
+      "Id": "fd62d6a7-5a7f-42f3-b362-9bcb54ddc18c",
+      "Name": "kate",
+      "Balance": 500
+    },
+    {
+      "Id": "a52bcd30-f135-4a30-9e66-f209b610c561",
+      "Name": "ilya",
+      "Balance": 2000
+    }
+  ],
+  "Operations": [
+    {
+      "Id": "231e82c9-d1fd-412b-8085-4784fa0fc4a1",
+      "Type": 1,
+      "BankAccountId": "fd62d6a7-5a7f-42f3-b362-9bcb54ddc18c",
+      "Amount": 500,
+      "Date": "2025-03-21T01:03:23.60977+03:00",
+      "Description": "tttt",
+      "CategoryId": "692923b1-bd14-49d0-9e77-2ab35bb65667"
+    }
+  ],
+  "Categories": [
+    {
+      "Id": "a398da74-8431-4278-85ec-275f74ca30a6",
+      "Name": "food",
+      "Type": 1
+    },
+    {
+      "Id": "692923b1-bd14-49d0-9e77-2ab35bb65667",
+      "Name": "shopping",
+      "Type": 1
+    },
+    {
+      "Id": "25cb95f2-13a3-4236-9e15-cfa47e847242",
+      "Name": "work",
+      "Type": 0
+    }
+  ]
+}

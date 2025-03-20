@@ -17,6 +17,13 @@ namespace big_hw_1.facades
 
         public Category? Get(Guid id) => _categoryStorage.Get(id);
 
+
+        public void Create(Guid id, string name, models.Type type)
+        {
+            var category = CategoryFactory.Create(id, name, type);
+            _categoryStorage.Add(category);
+        }
+
         public void Create(string name, models.Type type)
         {
             var category = CategoryFactory.Create(name, type);

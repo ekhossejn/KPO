@@ -17,6 +17,12 @@ namespace big_hw_1.facades
 
         public BankAccount? Get(Guid id) => _bankAccountStorage.Get(id);
 
+        public void Create(Guid id, string name, decimal balance)
+        {
+            var bankAccount = BankAccountFactory.Create(id, name, balance);
+            _bankAccountStorage.Add(bankAccount);
+        }
+
         public void Create(string name, decimal balance)
         {
             var bankAccount = BankAccountFactory.Create(name, balance);

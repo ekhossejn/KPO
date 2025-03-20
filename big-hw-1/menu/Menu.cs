@@ -2,18 +2,19 @@
 using big_hw_1.facades;
 using big_hw_1.commands;
 using Microsoft.Extensions.DependencyInjection;
-using big_hw_1.models;
+using big_hw_1.visitors;
+using big_hw_1.importers;
 
 namespace big_hw_1.menu
 {
-	public class Menu
-	{
+    public class Menu
+    {
         private readonly BankAccountFacade _bankAccountFacade;
         private readonly CategoryFacade _categoryFacade;
         private readonly OperationFacade _operationFacade;
 
         public Menu(ServiceProvider provider)
-		{
+        {
             _bankAccountFacade = provider.GetRequiredService<BankAccountFacade>();
             _categoryFacade = provider.GetRequiredService<CategoryFacade>();
             _operationFacade = provider.GetRequiredService<OperationFacade>();
@@ -37,18 +38,23 @@ namespace big_hw_1.menu
             Console.WriteLine("11. Change operation");
             Console.WriteLine("12. Delete operation");
             Console.WriteLine("==================");
-            Console.Write("Input number from 1 to 12: ");
+            Console.WriteLine("13. Export data to csv");
+            Console.WriteLine("14. Export data to json");
+            Console.WriteLine("15. Export data to yaml");
+            Console.WriteLine("16. Import data from json");
+            Console.WriteLine("==================");
+            Console.Write("Input number from 1 to 16: ");
         }
 
-		public void Show()
-		{
-			while (true)
-			{
+        public void Show()
+        {
+            while (true)
+            {
                 PrintMenu();
                 var id = Console.ReadLine();
                 switch (id)
                 {
-                    case "1": PrintBankAccounts();  break;
+                    case "1": PrintBankAccounts(); break;
                     case "2": CreateBankAccount(); break;
                     case "3": ChangeBankAccount(); break;
                     case "4": DeleteBankAccount(); break;
@@ -60,6 +66,10 @@ namespace big_hw_1.menu
                     case "10": CreateOperation(); break;
                     case "11": ChangeOperation(); break;
                     case "12": DeleteOperation(); break;
+                    case "13": ExportDataToCsvFile(); break;
+                    case "14": ExportDataToJsonFile(); break;
+                    case "15": ExportDataToYamlFile(); break;
+                    case "16": ImportDataFromJsonFile(); break;
                     default: Console.WriteLine("Invalid input\n"); break;
                 }
                 Console.WriteLine("Type anything to continue..");
@@ -71,12 +81,16 @@ namespace big_hw_1.menu
         private void PrintShortlyBankAccounts()
         {
             var bankAccounts = _bankAccountFacade.Get();
-            
+
             Console.WriteLine("Accounts to choose:");
+            if (!bankAccounts.Any())
+            {
+                Console.WriteLine("No bank accounts found...");
+                return;
+            }
             foreach (var bankAccount in bankAccounts)
             {
-                Console.WriteLine($"Id: {bankAccount.Id} Name: {bankAccount.Name}");
-                Console.WriteLine();
+                Console.WriteLine($"Id: {bankAccount.Id} | Name: {bankAccount.Name}");
             }
         }
 
@@ -91,7 +105,8 @@ namespace big_hw_1.menu
                 return;
             }
             Console.WriteLine(">>>>>>>>>>>>>");
-            foreach (var bankAccount in bankAccounts) {
+            foreach (var bankAccount in bankAccounts)
+            {
                 Console.WriteLine($"Id: {bankAccount.Id}");
                 Console.WriteLine($"Name: {bankAccount.Name}");
                 Console.WriteLine($"Balance: {bankAccount.Balance} монеток");
@@ -131,34 +146,29 @@ namespace big_hw_1.menu
 
         private void ChangeBankAccount()
         {
-            Console.Write("Id: ");
+            PrintShortlyBankAccounts();
+            Console.Write("Input Id: ");
             if (!Guid.TryParse(Console.ReadLine(), out var id))
             {
                 Console.WriteLine("Id must be guid\n");
                 return;
             }
 
-            var bankAccount = _bankAccountFacade.Get(id);
-            if (bankAccount == null)
-            {
-                Console.WriteLine("Bank account not found\n");
-                return;
-            }
-
-            Console.Write("Input name:");
+            Console.Write("Input name: ");
             var name = Console.ReadLine();
             if (name == null)
             {
                 Console.WriteLine("Invalid input\n");
                 return;
             }
-            bankAccount.ChangeName(name);
-            
+            _bankAccountFacade.ChangeName(id, name);
+
         }
 
         private void DeleteBankAccount()
         {
-            Console.Write("Id: ");
+            PrintShortlyBankAccounts();
+            Console.Write("Input Id: ");
             if (!Guid.TryParse(Console.ReadLine(), out var id))
             {
                 Console.WriteLine("Id must be guid\n");
@@ -169,14 +179,102 @@ namespace big_hw_1.menu
             Console.WriteLine("Deleted (even if there wasn't such account)\n");
         }
 
+        private void ExportDataToCsvFile()
+        {
+            Console.Write("Input file path: ");
+            var filePath = Console.ReadLine();
+            if (filePath == null)
+            {
+                Console.WriteLine("Invalid input\n");
+                return;
+            }
+
+            if (!filePath.EndsWith(".csv"))
+            {
+                Console.WriteLine("Invalid file extension. Expected: .csv\n");
+                return;
+            }
+
+            var command = new ExportToFileCommand(new CsvFileExporterVisitor(), _bankAccountFacade, _operationFacade, _categoryFacade, (string)filePath);
+            var time = new TimeMeasureDecorator(command, LogCallback);
+            time.Execute();
+        }
+
+        private void ExportDataToJsonFile()
+        {
+            Console.Write("Input file path: ");
+            var filePath = Console.ReadLine();
+            if (filePath == null)
+            {
+                Console.WriteLine("Invalid input\n");
+                return;
+            }
+
+            if (!filePath.EndsWith(".json"))
+            {
+                Console.WriteLine("Invalid file extension. Expected: .json\n");
+                return;
+            }
+
+            var command = new ExportToFileCommand(new JsonFileExporterVisitor(), _bankAccountFacade, _operationFacade, _categoryFacade, (string)filePath);
+            var time = new TimeMeasureDecorator(command, LogCallback);
+            time.Execute();
+        }
+
+        private void ExportDataToYamlFile()
+        {
+            Console.Write("Input file path: ");
+            var filePath = Console.ReadLine();
+            if (filePath == null)
+            {
+                Console.WriteLine("Invalid input\n");
+                return;
+            }
+
+            if (!filePath.EndsWith(".yaml") || !filePath.EndsWith(".yml"))
+            {
+                Console.WriteLine("Invalid file extension. Expected: .yaml or .yml\n");
+                return;
+            }
+
+            var command = new ExportToFileCommand(new YamlFileExporterVisitor(), _bankAccountFacade, _operationFacade, _categoryFacade, (string)filePath);
+            var time = new TimeMeasureDecorator(command, LogCallback);
+            time.Execute();
+        }
+
+        private void ImportDataFromJsonFile()
+        {
+            Console.Write("Input file path to import: ");
+            var filePath = Console.ReadLine();
+            if (filePath == null)
+            {
+                Console.WriteLine("Invalid input\n");
+                return;
+            }
+
+            if (!filePath.EndsWith(".json"))
+            {
+                Console.WriteLine("Invalid file extension. Expected: .json\n");
+                return;
+            }
+
+            var command = new ImportFileCommand(new JsonFileImporter(_bankAccountFacade, _categoryFacade, _operationFacade), (string)filePath);
+            var time = new TimeMeasureDecorator(command, LogCallback);
+            time.Execute();
+        }
+
         private void PrintShortlyCategories()
         {
             var categories = _categoryFacade.Get();
             Console.WriteLine("Categories to choose: ");
+            if (!categories.Any())
+            {
+                Console.WriteLine("Categories not found...");
+                return;
+            }
             foreach (var category in categories)
             {
-                Console.WriteLine($"Id: {category.Id} Name: {category.Name} Type: {category.Type}");
-                Console.WriteLine();
+                Console.WriteLine($"Id: {category.Id} | Name: {category.Name} | Type: {category.Type}");
             }
         }
 
@@ -203,7 +301,7 @@ namespace big_hw_1.menu
 
         private void CreateCategory()
         {
-            Console.Write("Name: ");
+            Console.Write("Input Name: ");
             var name = Console.ReadLine();
             if (name == null)
             {
@@ -212,7 +310,7 @@ namespace big_hw_1.menu
             }
             Console.WriteLine("1. Income");
             Console.WriteLine("2. Expense");
-            Console.Write("Input number from 1 to 2: ");
+            Console.Write("Input type: ");
             if (!decimal.TryParse(Console.ReadLine(), out var num))
             {
                 Console.WriteLine("Invalid input\n");
@@ -235,23 +333,18 @@ namespace big_hw_1.menu
 
         private void ChangeCategory()
         {
-            Console.Write("Id: ");
+            PrintShortlyCategories();
+            Console.Write("Input Id: ");
             if (!Guid.TryParse(Console.ReadLine(), out var id))
             {
                 Console.WriteLine("Id must be guid\n");
                 return;
             }
 
-            var category = _categoryFacade.Get(id);
-            if (category == null)
-            {
-                Console.WriteLine("Category not found\n");
-                return;
-            }
-
+            
             Console.WriteLine("1. Name");
             Console.WriteLine("2. Type");
-            Console.Write("Input number from 1 to 2: ");
+            Console.Write("Input number: ");
             if (!int.TryParse(Console.ReadLine(), out var num) | num < 1 | num > 2)
             {
                 Console.WriteLine("Invalid input\n");
@@ -260,32 +353,33 @@ namespace big_hw_1.menu
 
             if (num == 1)
             {
-                Console.Write("Name: ");
+                Console.Write("Input Name: ");
                 var name = Console.ReadLine();
                 if (name == null)
                 {
                     Console.WriteLine("Invalid input\n");
                     return;
                 }
-                category.ChangeName(name);
+                _categoryFacade.ChangeName(id, name);
             }
             else
             {
                 Console.WriteLine("1. Income");
                 Console.WriteLine("2. Expense");
-                Console.Write("Input number from 1 to 2: ");
+                Console.Write("Input number: ");
                 if (!int.TryParse(Console.ReadLine(), out var type) | type < 1 | type > 2)
                 {
                     Console.WriteLine("Invalid input\n");
                     return;
                 }
-                category.ChangeType(type == 1 ? models.Type.Income : models.Type.Expense);
+                _categoryFacade.ChangeType(id, type == 1 ? models.Type.Income : models.Type.Expense);
             }
         }
 
         private void DeleteCategory()
         {
-            Console.Write("Id: ");
+            PrintShortlyCategories();
+            Console.Write("Input Id: ");
             if (!Guid.TryParse(Console.ReadLine(), out var id))
             {
                 Console.WriteLine("Id must be guid\n");
@@ -294,6 +388,20 @@ namespace big_hw_1.menu
 
             _categoryFacade.Delete(id);
             Console.WriteLine("Deleted (even if there wasn't such category)\n");
+        }
+
+        private void PrintShortlyOperations()
+        {
+            var operations = _operationFacade.Get();
+            if (!operations.Any())
+            {
+                Console.WriteLine("Operations not found...");
+                return;
+            }
+            foreach (var operation in operations)
+            {
+                Console.WriteLine($"OperationId: {operation.Id} | Type: {operation.Type} | Amount: {operation.Amount} | Description: {operation.Description}");
+            }
         }
 
         private void PrintOperations()
@@ -324,41 +432,29 @@ namespace big_hw_1.menu
         private void CreateOperation()
         {
             PrintShortlyBankAccounts();
-            Console.Write("Bank Account Id: ");
+            Console.Write("Input Bank Account Id: ");
             if (!Guid.TryParse(Console.ReadLine(), out var accountId))
             {
                 Console.WriteLine("Id must be guid\n");
                 return;
             }
-            var bankAccount = _bankAccountFacade.Get(accountId);
-            if (bankAccount == null)
-            {
-                Console.WriteLine("Bank account not found\n");
-                return;
-            }
 
             PrintShortlyCategories();
-            Console.Write("Category Id: ");
+            Console.Write("Input Category Id: ");
             if (!Guid.TryParse(Console.ReadLine(), out var categoryId))
             {
                 Console.WriteLine("Id must be guid\n");
                 return;
             }
-            var category = _categoryFacade.Get(categoryId);
-            if (category == null)
-            {
-                Console.WriteLine("Category not found\n");
-                return;
-            }
-
-            Console.Write("Amount: ");
+            var category = _categoryFacade.Get(categoryId) ?? throw new ArgumentException("Category not found");
+            Console.Write("Input Amount: ");
             if (!decimal.TryParse(Console.ReadLine(), out var amount))
             {
                 Console.WriteLine("Amount must be decimal\n");
                 return;
             }
 
-            Console.Write("Description: ");
+            Console.Write("Input Description: ");
             var description = Console.ReadLine();
             if (description == null)
             {
@@ -382,55 +478,58 @@ namespace big_hw_1.menu
 
         private void ChangeOperation()
         {
-            Console.Write("Id: ");
+            PrintShortlyOperations();
+            Console.Write("Input Id: ");
             if (!Guid.TryParse(Console.ReadLine(), out var id))
             {
                 Console.WriteLine("Id must be guid\n");
                 return;
             }
 
-            var operation = _operationFacade.Get(id);
-            if (operation == null)
-            {
-                Console.WriteLine("Operation not found\n");
-                return;
-            }
-
             Console.WriteLine("1. Description");
             Console.WriteLine("2. Category Id");
-            Console.Write("Input number from 1 to 2: ");
+            Console.Write("Input number: ");
             if (!int.TryParse(Console.ReadLine(), out var num) | num < 1 | num > 2)
             {
                 Console.WriteLine("Invalid input\n");
                 return;
             }
 
-            if (num == 1)
+            try
             {
-                Console.Write("Description: ");
-                var description = Console.ReadLine();
-                if (description == null)
+                if (num == 1)
                 {
-                    Console.WriteLine("Invalid input\n");
-                    return;
+                    Console.Write("Input Description: ");
+                    var description = Console.ReadLine();
+                    if (description == null)
+                    {
+                        Console.WriteLine("Invalid input\n");
+                        return;
+                    }
+                    _operationFacade.ChangeDescription(id, description);
                 }
-                operation.ChangeDescription(description);
-            }
-            else
+                else
+                {
+                    PrintShortlyCategories();
+                    Console.Write("Input Id: ");
+                    if (!Guid.TryParse(Console.ReadLine(), out var categoryId))
+                    {
+                        Console.WriteLine("Invalid input\n");
+                        return;
+                    }
+                    _operationFacade.ChangeCategoryId(id, categoryId);
+                }
+            } catch (Exception ex)
             {
-                Console.Write("Id: ");
-                if (!Guid.TryParse(Console.ReadLine(), out var categoryId))
-                {
-                    Console.WriteLine("Invalid input\n");
-                    return;
-                }
-                operation.ChangeCategoryId(categoryId);
+                Console.WriteLine($"Error while changing operation: {ex.Message}\n");
             }
+
         }
 
         private void DeleteOperation()
         {
-            Console.Write("Id: ");
+            PrintShortlyOperations();
+            Console.Write("Input Id: ");
             if (!Guid.TryParse(Console.ReadLine(), out var id))
             {
                 Console.WriteLine("Id must be guid\n");
