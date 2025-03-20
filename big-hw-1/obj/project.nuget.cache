@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "8DWss6fEKLOKoCDvk+SCtNadPSM7ypQgun8GzmKm48H855Ddjxrq7gX4lDJytImWtcvVYLjGfpq1tzY2wJj71A==",
+  "success": true,
+  "projectFilePath": "/Users/katusha/KPO/big-hw-1/big-hw-1.csproj",
+  "expectedPackageFiles": [
+    "/Users/katusha/.nuget/packages/microsoft.extensions.dependencyinjection/8.0.0/microsoft.extensions.dependencyinjection.8.0.0.nupkg.sha512",
+    "/Users/katusha/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/8.0.0/microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

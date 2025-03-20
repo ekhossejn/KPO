@@ -1,0 +1,61 @@
+﻿using System;
+using System.Xml.Linq;
+using big_hw_1.factories;
+using big_hw_1.models;
+using big_hw_1.storages;
+
+namespace big_hw_1.facades
+{
+	public class OperationFacade
+	{
+        private readonly OperationStorage _operationStorage;
+        private readonly BankAccountStorage _bankAccountStorage;
+        private readonly CategoryStorage _categoryStorage;
+
+        public OperationFacade(OperationStorage operationStorage, BankAccountStorage bankAccountStorage, CategoryStorage categoryStorage)
+        {
+            _operationStorage = operationStorage;
+            _bankAccountStorage = bankAccountStorage;
+            _categoryStorage = categoryStorage;
+        }
+
+        public IEnumerable<Operation> Get() => _operationStorage.Get();
+
+        public Operation? Get(Guid id) => _operationStorage.Get(id);
+
+        public void Create(models.Type type, Guid bankAccountId, decimal amount, string description, Guid categoryId)
+        {
+            var bankAccount = _bankAccountStorage.Get(bankAccountId) ?? throw new ArgumentException("Unknown Bank Account id");
+            var category = _categoryStorage.Get(categoryId) ?? throw new ArgumentException("Unknown Category id");
+            if (type != category.Type)
+            {
+                throw new ArgumentException("Operation type doesn't equal to category type");
+            }
+            var operation = OperationFactory.CreateWithDefaultTime(type, bankAccountId, amount, description, categoryId);
+            _operationStorage.Add(operation);
+            bankAccount.ChangeBalance(type == models.Type.Income ? amount : -amount);
+            _bankAccountStorage.Replace(bankAccount);
+        }
+
+        public void ChangeDescription(Guid id, string description)
+        {
+            var operation = _operationStorage.Get(id) ?? throw new ArgumentException("Unknown Operation id");
+            operation.ChangeDescription(description);
+            _operationStorage.Replace(operation);
+        }
+
+        public void ChangeCategoryId(Guid id, Guid categoryId)
+        {
+            var operation = _operationStorage.Get(id) ?? throw new ArgumentException("Unknown Operation id");
+            operation.ChangeCategoryId(categoryId);
+            _operationStorage.Replace(operation);
+        }
+
+        public void Delete(Guid id)
+        {
+            _operationStorage.Delete(id);
+        }
+
+    }
+}
+
