@@ -1,0 +1,17 @@
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Application/bin/Debug/net7.0/Zoo.Application.deps.json
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Application/bin/Debug/net7.0/Zoo.Application.dll
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Application/bin/Debug/net7.0/Zoo.Application.pdb
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Application/bin/Debug/net7.0/Zoo.Domain.dll
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Application/bin/Debug/net7.0/Zoo.Infrastructure.dll
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Application/bin/Debug/net7.0/Zoo.Domain.pdb
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Application/bin/Debug/net7.0/Zoo.Infrastructure.pdb
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Application/obj/Debug/net7.0/Zoo.Application.csproj.AssemblyReference.cache
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Application/obj/Debug/net7.0/Zoo.Application.GeneratedMSBuildEditorConfig.editorconfig
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Application/obj/Debug/net7.0/Zoo.Application.AssemblyInfoInputs.cache
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Application/obj/Debug/net7.0/Zoo.Application.AssemblyInfo.cs
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Application/obj/Debug/net7.0/Zoo.Application.csproj.CoreCompileInputs.cache
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Application/obj/Debug/net7.0/Zoo.Application.csproj.CopyComplete
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Application/obj/Debug/net7.0/Zoo.Application.dll
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Application/obj/Debug/net7.0/refint/Zoo.Application.dll
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Application/obj/Debug/net7.0/Zoo.Application.pdb
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Application/obj/Debug/net7.0/ref/Zoo.Application.dll

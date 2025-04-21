@@ -1,0 +1,15 @@
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Infrastructure/bin/Debug/net7.0/Zoo.Infrastructure.deps.json
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Infrastructure/bin/Debug/net7.0/Zoo.Infrastructure.dll
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Infrastructure/bin/Debug/net7.0/Zoo.Infrastructure.pdb
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Infrastructure/bin/Debug/net7.0/Zoo.Domain.dll
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Infrastructure/bin/Debug/net7.0/Zoo.Domain.pdb
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Infrastructure/obj/Debug/net7.0/Zoo.Infrastructure.csproj.AssemblyReference.cache
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Infrastructure/obj/Debug/net7.0/Zoo.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Infrastructure/obj/Debug/net7.0/Zoo.Infrastructure.AssemblyInfoInputs.cache
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Infrastructure/obj/Debug/net7.0/Zoo.Infrastructure.AssemblyInfo.cs
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Infrastructure/obj/Debug/net7.0/Zoo.Infrastructure.csproj.CoreCompileInputs.cache
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Infrastructure/obj/Debug/net7.0/Zoo.Infrastructure.csproj.CopyComplete
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Infrastructure/obj/Debug/net7.0/Zoo.Infrastructure.dll
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Infrastructure/obj/Debug/net7.0/refint/Zoo.Infrastructure.dll
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Infrastructure/obj/Debug/net7.0/Zoo.Infrastructure.pdb
+/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Infrastructure/obj/Debug/net7.0/ref/Zoo.Infrastructure.dll

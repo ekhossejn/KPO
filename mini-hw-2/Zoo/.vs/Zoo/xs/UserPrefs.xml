@@ -1,0 +1,7 @@
+﻿<Properties StartupConfiguration="{2DFAF2DE-CC33-438D-91B7-3D8057E8C076}|https">
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.Zoo.Infrastructure FirstBuild="True" />
+  <MonoDevelop.Ide.ItemProperties.Zoo.Application FirstBuild="True" />
+  <MonoDevelop.Ide.ItemProperties.Zoo.Presentation FirstBuild="True" PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
+  <MonoDevelop.Ide.ItemProperties.Zoo.Domain FirstBuild="True" />
+</Properties>
