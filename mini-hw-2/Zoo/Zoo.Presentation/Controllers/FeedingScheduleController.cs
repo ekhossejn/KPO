@@ -72,7 +72,7 @@ namespace Zoo.Presentation.Controllers
         [ProducesResponseType(typeof(IEnumerable<FeedingSchedule>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
         [HttpGet("get_schedule_by_animalId/{animalId}")]
-        public async Task<IActionResult> GetByAnimalId(Guid animalId)
+        public async Task<IActionResult> GetScheduleByAnimalId(Guid animalId)
         {
             var schedules = await _feedingScheduleRepository.GetScheduleByAnimalIdAsync(animalId);
             return schedules != null ? Ok(schedules) : NotFound();

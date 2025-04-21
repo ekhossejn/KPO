@@ -17,7 +17,7 @@ namespace Zoo.Presentation.Controllers
 
         [HttpGet("get_animals_number")]
         [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetTotalAnimalCount()
+        public async Task<IActionResult> GetAnimalsNumber()
         {
             var count = await _statisticsService.GetAnimalsNumberAsync();
             return Ok(count);
@@ -25,7 +25,7 @@ namespace Zoo.Presentation.Controllers
 
         [HttpGet("get_animals_number/healthy")]
         [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetTotalHealthyAnimals()
+        public async Task<IActionResult> GetHealthyAnimalsNumber()
         {
             var count = await _statisticsService.GetHealthyAnimalsNumberAsync();
             return Ok(count);
@@ -33,7 +33,7 @@ namespace Zoo.Presentation.Controllers
 
         [HttpGet("get_enclosures_number")]
         [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetTotalEnclosureCount()
+        public async Task<IActionResult> GetEnclosuresNumber()
         {
             var count = await _statisticsService.GetEnclosuresNumberAsync();
             return Ok(count);
@@ -41,7 +41,7 @@ namespace Zoo.Presentation.Controllers
 
         [HttpGet("get_schedules_number")]
         [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetTotalFeedingScheduleCount()
+        public async Task<IActionResult> GetFeedingSchedulesNumber()
         {
             var count = await _statisticsService.GetFeedingSchedulesNumberAsync();
             return Ok(count);
