@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "ZlA/2tZRBvajD9sKOfn19xidTXSs0AIGjAKw+80YmL44Z/FYfqNv7JmmcwcgeOAXER0ZK5YARZD0XRgIAxcdBA==",
+  "success": true,
+  "projectFilePath": "/Users/katusha/KPO/mini-hw-2/Zoo/Zoo.Domain/Zoo.Domain.csproj",
+  "expectedPackageFiles": [
+    "/Users/katusha/.nuget/packages/mediatr/12.5.0/mediatr.12.5.0.nupkg.sha512",
+    "/Users/katusha/.nuget/packages/mediatr.contracts/2.0.1/mediatr.contracts.2.0.1.nupkg.sha512",
+    "/Users/katusha/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/8.0.0/microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
