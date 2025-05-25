@@ -1,0 +1,68 @@
+services:
+  apigateway:
+    build:
+      context: .
+      dockerfile: ./ApiGateway/ApiGateway/Dockerfile
+    ports:
+      - "5001:5001"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5001
+    depends_on:
+      - filestoring
+      - fileanalysis
+
+  filestoring:
+    build:
+      context: .
+      dockerfile: ./FileStoringService/FileStoringService/Dockerfile
+    ports:
+      - "5002:5002"
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=filestoring-db;Database=FileStoringDb;Username=postgres;Password=postgres
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - filestoring-db
+    volumes:
+      - file-storage:/app/FileStorage
+
+  fileanalysis:
+    build:
+      context: .
+      dockerfile: ./FileAnalysisService/FileAnalysisService/Dockerfile
+    ports:
+      - "5003:5003"
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=fileanalysis-db;Database=FileAnalysisDb;Username=postgres;Password=postgres
+      - FileStorageUrl=http://filestoring:5002
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - fileanalysis-db
+      - filestoring
+
+  filestoring-db:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: FileStoringDb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - filestoring-db-data:/var/lib/postgresql/data
+
+  fileanalysis-db:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: FileAnalysisDb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5434:5432"
+    volumes:
+      - fileanalysis-db-data:/var/lib/postgresql/data
+
+volumes:
+  filestoring-db-data:
+  fileanalysis-db-data:
+  file-storage:
