@@ -1,0 +1,11 @@
+.git
+.gitignore
+.gitattributes
+.dockerignore
+Dockerfile
+docker-compose.yml
+.vs/
+.vscode/
+TestResults/
+README.md
+swagger.json
