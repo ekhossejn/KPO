@@ -53,6 +53,7 @@
   - Payments Service: Реализация в `AccountService.ProcessPaymentAsync()` и соответствующем процессоре
 - **Transactional Inbox** в Payments Service для идемпотентной обработки сообщений:
   - Реализовано через сохранение и проверку обработанных сообщений в `PaymentsDbContext`
+  - Реализовано not more than once (version), not less than once (transactions)
 
 ## Начало работы
 
