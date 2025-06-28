@@ -1,0 +1,514 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Microservices Payment System API",
+    "description": "API docs",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/accounts": {
+      "post": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Create new account",
+        "description": "Creates new account for user. Only one account per user is allowed.",
+        "operationId": "createAccount",
+        "requestBody": {
+          "description": "Account creation request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAccountRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Account created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or account already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/accounts/{userId}": {
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Get account balance",
+        "description": "Gets the balance of user's account",
+        "operationId": "getBalance",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "id of the user",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Account balance gotten successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BalanceResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Account not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/accounts/deposit": {
+      "post": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Deposit funds to account",
+        "description": "Deposits funds to user's account",
+        "operationId": "deposit",
+        "requestBody": {
+          "description": "Deposit request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DepositRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Deposit successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Account not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/orders": {
+      "post": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Create new order",
+        "description": "Creates new order and starts payment processing",
+        "operationId": "createOrder",
+        "requestBody": {
+          "description": "Order creation request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrderRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Order created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/orders/{orderId}": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Get order details",
+        "description": "Gets the details of specific order",
+        "operationId": "getOrder",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "description": "id of the order",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Order details gotten successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Order not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/orders/user/{userId}": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Get user orders",
+        "description": "Gets all orders for specific user",
+        "operationId": "getUserOrders",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "id of the user",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Number of items per page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User orders gotten successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateAccountRequest": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "id of the user"
+          }
+        },
+        "required": [
+          "userId"
+        ]
+      },
+      "AccountResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "id of the account"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "id of the user"
+          },
+          "balance": {
+            "type": "number",
+            "format": "decimal",
+            "description": "Account balance"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Account creation date"
+          }
+        }
+      },
+      "BalanceResponse": {
+        "type": "object",
+        "properties": {
+          "accountId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "id of the account"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "id of the user"
+          },
+          "balance": {
+            "type": "number",
+            "format": "decimal",
+            "description": "Account balance"
+          }
+        }
+      },
+      "DepositRequest": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "id of the user"
+          },
+          "amount": {
+            "type": "number",
+            "format": "decimal",
+            "description": "Amount to deposit"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the deposit"
+          }
+        },
+        "required": [
+          "userId",
+          "amount"
+        ]
+      },
+      "TransactionResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "id of the transaction"
+          },
+          "accountId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "id of the account"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "Deposit",
+              "Withdrawal",
+              "PaymentAttempt"
+            ],
+            "description": "Type of transaction"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Pending",
+              "Completed",
+              "Failed"
+            ],
+            "description": "Status of transaction"
+          },
+          "amount": {
+            "type": "number",
+            "format": "decimal",
+            "description": "Transaction amount"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the transaction"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Transaction creation date"
+          }
+        }
+      },
+      "CreateOrderRequest": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "id of the user"
+          },
+          "amount": {
+            "type": "number",
+            "format": "decimal",
+            "description": "Order amount"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the order"
+          }
+        },
+        "required": [
+          "userId",
+          "amount",
+          "description"
+        ]
+      },
+      "OrderResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "id of the order"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "id of the user"
+          },
+          "amount": {
+            "type": "number",
+            "format": "decimal",
+            "description": "Order amount"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the order"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "New",
+              "Finished",
+              "Cancelled"
+            ],
+            "description": "Status of the order"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Order creation date"
+          }
+        }
+      },
+      "OrderListResponse": {
+        "type": "object",
+        "properties": {
+          "orders": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderResponse"
+            },
+            "description": "List of orders"
+          },
+          "totalCount": {
+            "type": "integer",
+            "description": "Total number of orders"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Error message"
+          },
+          "statusCode": {
+            "type": "integer",
+            "description": "HTTP status code"
+          }
+        }
+      }
+    }
+  }
+}
